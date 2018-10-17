@@ -13,4 +13,9 @@ defmodule Bounds.BoundingBox do
       }
     }
   end
+
+  def contains?(box, coord) do
+    coord.lon >= box.southwest.lon && coord.lon <= box.northeast.lon &&
+      coord.lat >= box.southwest.lat && coord.lat <= box.northeast.lat
+  end
 end
