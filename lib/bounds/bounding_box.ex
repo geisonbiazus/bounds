@@ -1,6 +1,10 @@
 defmodule Bounds.BoundingBox do
   defstruct southwest: %Bounds.Coordinate{}, northeast: %Bounds.Coordinate{}
 
+  def new(lon_a, lat_a, lon_b, lat_b) do
+    create(Bounds.Coordinate.new(lon_a, lat_a), Bounds.Coordinate.new(lon_b, lat_b))
+  end
+
   def create(coord_a, coord_b) do
     %Bounds.BoundingBox{
       southwest: %Bounds.Coordinate{

@@ -1,5 +1,5 @@
 defmodule Bounds.BoundingBoxTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "creates a new bounding box" do
     coord_a = %Bounds.Coordinate{lon: 0, lat: 1}
