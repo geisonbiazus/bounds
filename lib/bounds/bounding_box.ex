@@ -1,12 +1,16 @@
 defmodule Bounds.BoundingBox do
-  defstruct min_lon: 0, min_lat: 0, max_lon: 0, max_lat: 0
+  defstruct southwest: %Bounds.Coordinate{}, northeast: %Bounds.Coordinate{}
 
-  def create(lon_a, lat_a, lon_b, lat_b) do
+  def create(coord_a, coord_b) do
     %Bounds.BoundingBox{
-      min_lon: min(lon_a, lon_b),
-      min_lat: min(lat_a, lat_b),
-      max_lon: max(lon_a, lon_b),
-      max_lat: max(lat_a, lat_b)
+      southwest: %Bounds.Coordinate{
+        lon: min(coord_a.lon, coord_b.lon),
+        lat: min(coord_a.lat, coord_b.lat)
+      },
+      northeast: %Bounds.Coordinate{
+        lon: max(coord_a.lon, coord_b.lon),
+        lat: max(coord_a.lat, coord_b.lat)
+      }
     }
   end
 end
