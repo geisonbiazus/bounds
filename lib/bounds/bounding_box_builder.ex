@@ -15,3 +15,9 @@ defmodule Bounds.BoundingBoxBuilder do
     }
   end
 end
+
+defimpl Bounds.CoordinateBuilder, for: Bounds.BoundingBoxBuilder do
+  def add_coord(builder, coord) do
+    Bounds.BoundingBoxBuilder.add_coord(builder, coord)
+  end
+end

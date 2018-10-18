@@ -28,4 +28,12 @@ defmodule Bounds.BoundingBoxBuilderTest do
              Bounds.BoundingBox.new(1, 1, 2, 2)
            ]
   end
+
+  test "implements CoordinateBuilder protocol", %{builder: builder} do
+    builder = Bounds.CoordinateBuilder.add_coord(builder, Bounds.Coordinate.new(1, 1))
+    builder = Bounds.CoordinateBuilder.add_coord(builder, Bounds.Coordinate.new(2, 2))
+    assert length(builder.list) == 1
+
+    assert hd(builder.list) == Bounds.BoundingBox.new(1, 1, 2, 2)
+  end
 end
