@@ -1,23 +1,23 @@
-defmodule CoordinateBuilderSpy do
-  defstruct list: []
-
-  def add_coord(builder, coord) do
-    %{builder | list: [coord | builder.list]}
-  end
-
-  defimpl Bounds.CoordinateBuilder, for: CoordinateBuilderSpy do
-    def add_coord(builder, coord) do
-      CoordinateBuilderSpy.add_coord(builder, coord)
-    end
-  end
-end
-
 defmodule Bounds.CoordinateFileReaderTest do
   use ExUnit.Case, async: true
 
-  test "reads a csv stream and adds a coordinate to the builder" do
-    stream = ["1,1"]
-    builder = Bounds.CoordinateFileReader.read(stream, %CoordinateBuilderSpy{})
-    assert builder.list == [Bounds.Coordinate.new(1, 1)]
+  test "reads a multiline stream and retuns a coordinate stream" do
+    stream = [
+      "lon,lat\n",
+      "1,1\n",
+      "3.3,4.4\n",
+      "3.14,1234\n",
+      "\n"
+    ]
+
+    coordinates =
+      Bounds.CoordinateFileReader.read(stream)
+      |> Enum.to_list()
+
+    assert coordinates == [
+             Bounds.Coordinate.new(1, 1),
+             Bounds.Coordinate.new(3.3, 4.4),
+             Bounds.Coordinate.new(3.14, 1234)
+           ]
   end
 end
