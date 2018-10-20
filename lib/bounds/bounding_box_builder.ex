@@ -14,4 +14,10 @@ defmodule Bounds.BoundingBoxBuilder do
       list: [Bounds.BoundingBox.new(last_coord, coord) | list]
     }
   end
+
+  def build_list(coordinates) do
+    coordinates
+    |> Enum.reduce(new(), &add_coord(&2, &1))
+    |> Map.fetch!(:list)
+  end
 end
