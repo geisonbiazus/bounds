@@ -1,18 +1,20 @@
 defmodule Bounds.CoordinateAssigner do
-  def assign(bounding_boxes, coordinates) do
-    bounding_boxes
-    |> Enum.map_reduce(coordinates, fn box, coordinates ->
-      {found, remaining} = filter_coordinates(box, coordinates)
-      {%{bounding_box: box, coordinates: found}, remaining}
-    end)
-    |> elem(0)
-    |> Enum.reject(&empty_coordinates(&1))
+  alias Bounds.BoundingBoxRepository
+
+  def assign(repository, coordinates) do
+    coordinates
+    |> Stream.map(&assign_coordinate(&1, repository))
+    |> Stream.reject(&no_bounding_box?(&1))
+    |> Enum.to_list()
   end
 
-  defp filter_coordinates(box, coordinates) do
-    Enum.split_with(coordinates, &Bounds.BoundingBox.contains?(box, &1))
+  defp assign_coordinate(coordinate, repository) do
+    %{
+      coordinate: coordinate,
+      bounding_box: BoundingBoxRepository.find_containing(repository, coordinate)
+    }
   end
 
-  defp empty_coordinates(%{coordinates: []}), do: true
-  defp empty_coordinates(_), do: false
+  defp no_bounding_box?(%{bounding_box: nil}), do: true
+  defp no_bounding_box?(_), do: false
 end
