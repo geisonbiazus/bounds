@@ -1,18 +1,5 @@
 defmodule Bounds do
-  @moduledoc """
-  Documentation for Bounds.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Bounds.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def assign_coordinates(pairs_file_path, coordinates_file_path) do
+    Bounds.ImportCoordinatesService.run(pairs_file_path, coordinates_file_path)
   end
 end
