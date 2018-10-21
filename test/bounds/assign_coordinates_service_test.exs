@@ -1,10 +1,10 @@
-defmodule Bounds.ImportCoordinatesServiceTest do
+defmodule Bounds.AssignCoordinatesTest do
   use ExUnit.Case, async: true
 
   test "generates bounding boxes assigning the coordinates from the given files" do
     pairs_path = "#{__DIR__}/files/pairs.csv"
     coordinates_path = "#{__DIR__}/files/coordinates.csv"
-    result = Bounds.ImportCoordinatesService.run(pairs_path, coordinates_path)
+    result = Bounds.AssignCoordinates.run(pairs_path, coordinates_path)
 
     assert result == [
              %{

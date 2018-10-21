@@ -1,4 +1,4 @@
-defmodule Bounds.ImportCoordinatesService do
+defmodule Bounds.AssignCoordinates do
   def run(pairs_file_path, coordinates_file_path) do
     repository = Bounds.BoundingBoxRepository.new()
 
