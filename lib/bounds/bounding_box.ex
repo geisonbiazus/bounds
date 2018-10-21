@@ -22,4 +22,10 @@ defmodule Bounds.BoundingBox do
     coord.lon >= box.southwest.lon && coord.lon <= box.northeast.lon &&
       coord.lat >= box.southwest.lat && coord.lat <= box.northeast.lat
   end
+
+  def build_list(coordinates) do
+    coordinates
+    |> Stream.chunk_every(2, 2, :discard)
+    |> Stream.map(fn [a, b] -> Bounds.BoundingBox.new(a, b) end)
+  end
 end

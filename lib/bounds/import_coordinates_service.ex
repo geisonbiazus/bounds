@@ -4,7 +4,7 @@ defmodule Bounds.ImportCoordinatesService do
       pairs_file_path
       |> File.stream!()
       |> Bounds.CoordinateFileReader.read()
-      |> Bounds.BoundingBoxBuilder.build_list()
+      |> Bounds.BoundingBox.build_list()
 
     coordinates =
       coordinates_file_path

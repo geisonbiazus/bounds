@@ -8,12 +8,12 @@ defmodule Bounds.ImportCoordinatesServiceTest do
 
     assert result == [
              %{
-               bounding_box: Bounds.BoundingBox.new(1.0, 3.0, 9.0, 8.0),
-               coordinates: [Bounds.Coordinate.new(7.0, 7.0)]
-             },
-             %{
                bounding_box: Bounds.BoundingBox.new(1.3, 2.3, 2.5, 5.3),
                coordinates: [Bounds.Coordinate.new(2.1, 2.9)]
+             },
+             %{
+               bounding_box: Bounds.BoundingBox.new(1.0, 3.0, 9.0, 8.0),
+               coordinates: [Bounds.Coordinate.new(7.0, 7.0)]
              }
            ]
   end
