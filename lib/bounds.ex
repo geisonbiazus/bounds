@@ -19,7 +19,7 @@ defmodule Bounds do
   end
 
   def bounding_boxes_for(app_state, origin, destination) do
-    {result, repository} =
+    {repository, result} =
       Bounds.GetOriginAndDestinationBoundingBoxesService.run(
         app_state.bounding_box_repository,
         origin,

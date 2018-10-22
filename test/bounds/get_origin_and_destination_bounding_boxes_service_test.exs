@@ -27,7 +27,7 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       origin = {2, 2}
       destination = {12, 12}
 
-      {result, _} =
+      {_, result} =
         Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
       assert result == [
@@ -50,7 +50,7 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       origin = {2, 2}
       destination = {120, 120}
 
-      {result, _} =
+      {_, result} =
         Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
       assert result == [
@@ -69,7 +69,7 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       origin = {2, 2}
       destination = {12, 12}
 
-      {_, repository} =
+      {repository, _} =
         Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
       assert Bounds.BoundingBoxRepository.all(repository)

@@ -4,9 +4,9 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesService do
   def run(repository, {origin_lon, origin_lat}, {destination_lon, destination_lat}) do
     origin = Coordinate.new(origin_lon, origin_lat)
     destination = Coordinate.new(destination_lon, destination_lat)
+    result = produce_result(repository, origin, destination)
 
-    {produce_result(repository, origin, destination),
-     store_bounding_box(repository, origin, destination)}
+    {store_bounding_box(repository, origin, destination), result}
   end
 
   defp produce_result(repository, origin, destination) do
