@@ -1,10 +1,15 @@
 defmodule Bounds.GetOriginAndDestinationBoundingBoxesService do
-  alias Bounds.{Coordinate, BoundingBoxRepository}
+  alias Bounds.{Coordinate, BoundingBoxRepository, BoundingBox}
 
   def run(repository, {origin_lon, origin_lat}, {destination_lon, destination_lat}) do
     origin = Coordinate.new(origin_lon, origin_lat)
     destination = Coordinate.new(destination_lon, destination_lat)
 
+    {produce_result(repository, origin, destination),
+     store_bounding_box(repository, origin, destination)}
+  end
+
+  defp produce_result(repository, origin, destination) do
     [
       matching_bounding_boxes(repository, origin),
       matching_bounding_boxes(repository, destination)
@@ -16,5 +21,9 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesService do
       coordinate: coordinate,
       bounding_boxes: BoundingBoxRepository.find_all_containing(repository, coordinate)
     }
+  end
+
+  defp store_bounding_box(repository, origin, destination) do
+    BoundingBoxRepository.add(repository, BoundingBox.new(origin, destination))
   end
 end

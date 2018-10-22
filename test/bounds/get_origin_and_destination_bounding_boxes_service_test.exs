@@ -17,50 +17,66 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
     %{repository: repository, box_1: box_1, box_2: box_2, box_3: box_3}
   end
 
-  test "returns the bounding boxes that match origin and destination", %{
-    repository: repository,
-    box_1: box_1,
-    box_2: box_2,
-    box_3: box_3
-  } do
-    origin = {2, 2}
-    destination = {12, 12}
+  describe "run" do
+    test "returns the bounding boxes that match origin and destination", %{
+      repository: repository,
+      box_1: box_1,
+      box_2: box_2,
+      box_3: box_3
+    } do
+      origin = {2, 2}
+      destination = {12, 12}
 
-    result =
-      Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+      {result, _} =
+        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
-    assert result == [
-             %{
-               coordinate: Coordinate.new(2, 2),
-               bounding_boxes: [box_1, box_3]
-             },
-             %{
-               coordinate: Coordinate.new(12, 12),
-               bounding_boxes: [box_2, box_3]
-             }
-           ]
-  end
+      assert result == [
+               %{
+                 coordinate: Coordinate.new(2, 2),
+                 bounding_boxes: [box_1, box_3]
+               },
+               %{
+                 coordinate: Coordinate.new(12, 12),
+                 bounding_boxes: [box_2, box_3]
+               }
+             ]
+    end
 
-  test "returns bounding_box nil if it doesn't match", %{
-    repository: repository,
-    box_1: box_1,
-    box_3: box_3
-  } do
-    origin = {2, 2}
-    destination = {120, 120}
+    test "returns bounding_box nil if it doesn't match", %{
+      repository: repository,
+      box_1: box_1,
+      box_3: box_3
+    } do
+      origin = {2, 2}
+      destination = {120, 120}
 
-    result =
-      Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+      {result, _} =
+        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
-    assert result == [
-             %{
-               coordinate: Coordinate.new(2, 2),
-               bounding_boxes: [box_1, box_3]
-             },
-             %{
-               coordinate: Coordinate.new(120, 120),
-               bounding_boxes: []
-             }
-           ]
+      assert result == [
+               %{
+                 coordinate: Coordinate.new(2, 2),
+                 bounding_boxes: [box_1, box_3]
+               },
+               %{
+                 coordinate: Coordinate.new(120, 120),
+                 bounding_boxes: []
+               }
+             ]
+    end
+
+    test "stores the given origin and destination as a bounding box", %{repository: repository} do
+      origin = {2, 2}
+      destination = {12, 12}
+
+      {_, repository} =
+        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+
+      assert Bounds.BoundingBoxRepository.all(repository)
+             |> Enum.find(fn box ->
+               box.northeast.lon == 12 && box.northeast.lat == 12 && box.southwest.lon == 2 &&
+                 box.southwest.lat == 2
+             end)
+    end
   end
 end
