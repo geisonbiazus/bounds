@@ -1,6 +1,8 @@
 defmodule Bounds.CoordinateFileReaderTest do
   use ExUnit.Case, async: true
 
+  alias Bounds.Entities.{CoordinateFileReader, Coordinate}
+
   test "reads a multiline stream and retuns a coordinate stream" do
     stream = [
       "lon,lat\n",
@@ -11,13 +13,13 @@ defmodule Bounds.CoordinateFileReaderTest do
     ]
 
     coordinates =
-      Bounds.CoordinateFileReader.read(stream)
+      CoordinateFileReader.read(stream)
       |> Enum.to_list()
 
     assert coordinates == [
-             Bounds.Coordinate.new(1, 1),
-             Bounds.Coordinate.new(3.3, 4.4),
-             Bounds.Coordinate.new(3.14, 1234)
+             Coordinate.new(1, 1),
+             Coordinate.new(3.3, 4.4),
+             Coordinate.new(3.14, 1234)
            ]
   end
 end

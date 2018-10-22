@@ -1,7 +1,9 @@
-defmodule Bounds.BoundingBoxRepository do
+defmodule Bounds.Entities.BoundingBoxRepository do
+  alias Bounds.Entities.{BoundingBoxRepository, BoundingBox}
+
   defstruct data: []
 
-  def new, do: %Bounds.BoundingBoxRepository{}
+  def new, do: %BoundingBoxRepository{}
 
   def add(repo, bounding_box) do
     %{repo | data: [bounding_box | repo.data]}
@@ -12,10 +14,10 @@ defmodule Bounds.BoundingBoxRepository do
   end
 
   def find_containing(%{data: data}, coordinate) do
-    Enum.find(data, &Bounds.BoundingBox.contains?(&1, coordinate))
+    Enum.find(data, &BoundingBox.contains?(&1, coordinate))
   end
 
   def find_all_containing(%{data: data}, coordinate) do
-    Enum.filter(data, &Bounds.BoundingBox.contains?(&1, coordinate))
+    Enum.filter(data, &BoundingBox.contains?(&1, coordinate))
   end
 end

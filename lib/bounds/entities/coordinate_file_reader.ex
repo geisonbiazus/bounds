@@ -1,4 +1,6 @@
-defmodule Bounds.CoordinateFileReader do
+defmodule Bounds.Entities.CoordinateFileReader do
+  alias Bounds.Entities.Coordinate
+
   def read(rows) do
     rows
     |> skip_header
@@ -22,7 +24,7 @@ defmodule Bounds.CoordinateFileReader do
   defp to_coordinate([lon, lat]) do
     {lon, _} = Float.parse(lon)
     {lat, _} = Float.parse(lat)
-    Bounds.Coordinate.new(lon, lat)
+    Coordinate.new(lon, lat)
   end
 
   defp to_coordinate(_), do: nil

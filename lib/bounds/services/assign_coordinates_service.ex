@@ -1,5 +1,10 @@
-defmodule Bounds.AssignCoordinates do
-  alias Bounds.{CoordinateFileReader, BoundingBox, CoordinateAssigner, BoundingBoxRepository}
+defmodule Bounds.Services.AssignCoordinatesService do
+  alias Bounds.Entities.{
+    CoordinateFileReader,
+    BoundingBox,
+    CoordinateAssigner,
+    BoundingBoxRepository
+  }
 
   def run(repository, pairs_file_path, coordinates_file_path) do
     bounding_boxes =

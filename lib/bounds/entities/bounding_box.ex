@@ -1,17 +1,19 @@
-defmodule Bounds.BoundingBox do
-  defstruct southwest: %Bounds.Coordinate{}, northeast: %Bounds.Coordinate{}
+defmodule Bounds.Entities.BoundingBox do
+  alias Bounds.Entities.{Coordinate, BoundingBox}
+
+  defstruct southwest: %Coordinate{}, northeast: %Coordinate{}
 
   def new(lon_a, lat_a, lon_b, lat_b) do
-    new(Bounds.Coordinate.new(lon_a, lat_a), Bounds.Coordinate.new(lon_b, lat_b))
+    new(Coordinate.new(lon_a, lat_a), Coordinate.new(lon_b, lat_b))
   end
 
   def new(coord_a, coord_b) do
-    %Bounds.BoundingBox{
-      southwest: %Bounds.Coordinate{
+    %BoundingBox{
+      southwest: %Coordinate{
         lon: min(coord_a.lon, coord_b.lon),
         lat: min(coord_a.lat, coord_b.lat)
       },
-      northeast: %Bounds.Coordinate{
+      northeast: %Coordinate{
         lon: max(coord_a.lon, coord_b.lon),
         lat: max(coord_a.lat, coord_b.lat)
       }
@@ -26,6 +28,6 @@ defmodule Bounds.BoundingBox do
   def build_list(coordinates) do
     coordinates
     |> Stream.chunk_every(2, 2, :discard)
-    |> Stream.map(fn [a, b] -> Bounds.BoundingBox.new(a, b) end)
+    |> Stream.map(fn [a, b] -> BoundingBox.new(a, b) end)
   end
 end

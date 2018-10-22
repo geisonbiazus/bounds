@@ -1,6 +1,9 @@
 defmodule Bounds do
+  alias Bounds.Services.{AssignCoordinatesService, GetOriginAndDestinationBoundingBoxesService}
+  alias Bounds.Entities.BoundingBoxRepository
+
   defmodule AppState do
-    defstruct bounding_box_repository: Bounds.BoundingBoxRepository.new()
+    defstruct bounding_box_repository: BoundingBoxRepository.new()
   end
 
   def new do
@@ -9,7 +12,7 @@ defmodule Bounds do
 
   def assign_coordinates(app_state, pairs_file_path, coordinates_file_path) do
     {repository, result} =
-      Bounds.AssignCoordinates.run(
+      AssignCoordinatesService.run(
         app_state.bounding_box_repository,
         pairs_file_path,
         coordinates_file_path
@@ -20,7 +23,7 @@ defmodule Bounds do
 
   def bounding_boxes_for(app_state, origin, destination) do
     {repository, result} =
-      Bounds.GetOriginAndDestinationBoundingBoxesService.run(
+      GetOriginAndDestinationBoundingBoxesService.run(
         app_state.bounding_box_repository,
         origin,
         destination

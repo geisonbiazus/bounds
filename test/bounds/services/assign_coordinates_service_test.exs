@@ -1,7 +1,8 @@
 defmodule Bounds.AssignCoordinatesTest do
   use ExUnit.Case, async: true
 
-  alias Bounds.{AssignCoordinates, BoundingBox, Coordinate, BoundingBoxRepository}
+  alias Bounds.Entities.{BoundingBox, Coordinate, BoundingBoxRepository}
+  alias Bounds.Services.AssignCoordinatesService
 
   setup do
     repository = BoundingBoxRepository.new()
@@ -16,7 +17,7 @@ defmodule Bounds.AssignCoordinatesTest do
     pairs_path: pairs_path,
     coordinates_path: coordinates_path
   } do
-    {_, result} = AssignCoordinates.run(repository, pairs_path, coordinates_path)
+    {_, result} = AssignCoordinatesService.run(repository, pairs_path, coordinates_path)
 
     assert result == [
              %{
@@ -35,7 +36,7 @@ defmodule Bounds.AssignCoordinatesTest do
     pairs_path: pairs_path,
     coordinates_path: coordinates_path
   } do
-    {repository, _} = AssignCoordinates.run(repository, pairs_path, coordinates_path)
+    {repository, _} = AssignCoordinatesService.run(repository, pairs_path, coordinates_path)
 
     assert BoundingBoxRepository.all(repository) == [
              BoundingBox.new(1.0, 3.0, 9.0, 8.0),

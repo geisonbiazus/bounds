@@ -1,7 +1,8 @@
-defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
+defmodule Bounds.Services.GetOriginAndDestinationBoundingBoxesServiceTest do
   use ExUnit.Case, async: true
 
-  alias Bounds.{Coordinate, BoundingBox, BoundingBoxRepository}
+  alias Bounds.Entities.{Coordinate, BoundingBox, BoundingBoxRepository}
+  alias Bounds.Services.GetOriginAndDestinationBoundingBoxesService
 
   setup do
     box_1 = BoundingBox.new(1, 1, 5, 5)
@@ -28,7 +29,7 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       destination = {12, 12}
 
       {_, result} =
-        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+        GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
       assert result == [
                %{
@@ -51,7 +52,7 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       destination = {120, 120}
 
       {_, result} =
-        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+        GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
       assert result == [
                %{
@@ -70,9 +71,9 @@ defmodule Bounds.GetOriginAndDestinationBoundingBoxesServiceTest do
       destination = {12, 12}
 
       {repository, _} =
-        Bounds.GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
+        GetOriginAndDestinationBoundingBoxesService.run(repository, origin, destination)
 
-      assert Bounds.BoundingBoxRepository.all(repository)
+      assert BoundingBoxRepository.all(repository)
              |> Enum.find(fn box ->
                box.northeast.lon == 12 && box.northeast.lat == 12 && box.southwest.lon == 2 &&
                  box.southwest.lat == 2

@@ -1,5 +1,5 @@
-defmodule Bounds.CoordinateAssigner do
-  alias Bounds.BoundingBox
+defmodule Bounds.Entities.CoordinateAssigner do
+  alias Bounds.Entities.BoundingBox
 
   def assign(bounding_boxes, coordinates) do
     coordinates

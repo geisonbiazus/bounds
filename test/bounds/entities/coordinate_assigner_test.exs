@@ -1,7 +1,7 @@
 defmodule Bounds.CoordinateAssignerTest do
   use ExUnit.Case, async: true
 
-  alias Bounds.{BoundingBox, Coordinate, CoordinateAssigner}
+  alias Bounds.Entities.{BoundingBox, Coordinate, CoordinateAssigner}
 
   test "assigns the coordinates that are inside the bounding boxes" do
     bounding_boxes = [

@@ -1,5 +1,5 @@
-defmodule Bounds.GetOriginAndDestinationBoundingBoxesService do
-  alias Bounds.{Coordinate, BoundingBoxRepository, BoundingBox}
+defmodule Bounds.Services.GetOriginAndDestinationBoundingBoxesService do
+  alias Bounds.Entities.{Coordinate, BoundingBoxRepository, BoundingBox}
 
   def run(repository, {origin_lon, origin_lat}, {destination_lon, destination_lat}) do
     origin = Coordinate.new(origin_lon, origin_lat)

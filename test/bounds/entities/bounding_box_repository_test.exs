@@ -1,6 +1,6 @@
 defmodule Bounds.BoundingBoxRepositoryTest do
-  alias Bounds.BoundingBoxRepository, as: Repository
-  alias Bounds.{BoundingBox, Coordinate}
+  alias Bounds.Entities.BoundingBoxRepository, as: Repository
+  alias Bounds.Entities.{BoundingBox, Coordinate}
 
   use ExUnit.Case, async: true
 
