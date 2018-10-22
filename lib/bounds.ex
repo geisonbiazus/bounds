@@ -8,7 +8,14 @@ defmodule Bounds do
   end
 
   def assign_coordinates(pairs_file_path, coordinates_file_path) do
-    Bounds.AssignCoordinates.run(pairs_file_path, coordinates_file_path)
+    {_, result} =
+      Bounds.AssignCoordinates.run(
+        Bounds.BoundingBoxRepository.new(),
+        pairs_file_path,
+        coordinates_file_path
+      )
+
+    result
   end
 
   def bounding_boxes_for(app_state, origin, destination) do
