@@ -7,15 +7,15 @@ defmodule Bounds do
     %Bounds.AppState{}
   end
 
-  def assign_coordinates(pairs_file_path, coordinates_file_path) do
-    {_, result} =
+  def assign_coordinates(app_state, pairs_file_path, coordinates_file_path) do
+    {repository, result} =
       Bounds.AssignCoordinates.run(
-        Bounds.BoundingBoxRepository.new(),
+        app_state.bounding_box_repository,
         pairs_file_path,
         coordinates_file_path
       )
 
-    result
+    {%{app_state | bounding_box_repository: repository}, result}
   end
 
   def bounding_boxes_for(app_state, origin, destination) do
