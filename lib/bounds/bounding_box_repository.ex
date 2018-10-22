@@ -14,4 +14,8 @@ defmodule Bounds.BoundingBoxRepository do
   def find_containing(%{data: data}, coordinate) do
     Enum.find(data, &Bounds.BoundingBox.contains?(&1, coordinate))
   end
+
+  def find_all_containing(%{data: data}, coordinate) do
+    Enum.filter(data, &Bounds.BoundingBox.contains?(&1, coordinate))
+  end
 end
